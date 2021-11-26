@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateChartOfAccountsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('chart_of_accounts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('account_type');            
+            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('depth_allowed');
+            $table->string('description');
+            $table->boolean('status');
+            $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index(['parent_id']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('chart_of_accounts');
+    }
+}

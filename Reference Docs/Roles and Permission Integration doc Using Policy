@@ -1,0 +1,53 @@
+Step to Add Roles and Right for New Module in Super Admin Panel Using Policy
+
+1) Add Module, In Module Master along with available transaction.
+
+		* Slug Key For Transactions of Module in permission.
+
+		* For Ex: Module Name is "Charts Of Account" and Transactions ['read','write','delete']
+
+		* Then Slug key will be singular words of "Charts Of Account", and Slugged with '-'.
+
+		* Output slug keys for permission : 		   
+			['chart-of-account-read','chart-of-account-write','chart-of-account-delete']
+
+2) Generate a New Policy Class belongs new Module Model.
+	
+		* For Ex: php artisan make:policy ChartOfAccountPolicy --model="ChartOfAccount"
+
+		* This Will generate new Policy Class in App\Policies Folder
+
+3) To Listen This Policy Class , Add it in AuthServiceProvider.php boot() method
+
+		* For Ex : Model::Class => Policy::class,
+		* ChartOfAccount::Class => ChartOfAccountPolicy::class,
+
+4) Now In Policy Class "ChartOfAccountPolicy" add login methods
+
+		** For Ex : Am defining logic to access ChartOfAccount List Page, To view List Page we need access for "chart-of-account-read" permission
+
+		public function coaRead(User $user) {
+			return access('chart-of-account-read'); 
+		}
+
+		//access is helper method, here i will check the keyword is available in user permission array
+
+5) In Controller We have To check the method is authorized to load.
+
+		public funtion index() {
+			$this->authorize('coaRead',ChartOfAccount::class);
+		}
+
+
+************* Thats It **************************
+
+
+To Check Blade File Navigations/Action Links, Use
+
+	@if(access('chart-of-account-read'))
+
+	@endif
+
+	@if(access(['chart-of-account-read','chart-of-account-write']))
+		
+	@endif
