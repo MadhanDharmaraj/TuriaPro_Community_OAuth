@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = "http://admin.turia.in/redirect";
+    protected $redirectTo = "https://community.turiapro.com";
 
     /**
      * Create a new controller instance.

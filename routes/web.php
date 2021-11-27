@@ -15,17 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('/');
-});
-
-Route::middleware(['auth:api', 'scope:view-user'])->get('/user', function (Request $request) {
-    return $request->user();
+    return redirect()->route("login");
 });
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::get('/posts', 'PostsController@index');
+Route::get('/posts', 'PostsController@index');
 
-// Route::get('/developers', 'DevelopersController@index');
+Route::get('/developers', 'DevelopersController@index');
